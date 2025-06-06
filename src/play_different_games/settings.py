@@ -64,10 +64,12 @@ with env.prefixed("DJANGO_"):
     FIRST_PARTY_APPS = [
         "play_different_games.core",
         "play_different_games.users",
-        "prune_media",
+        "play_different_games.catalog",
     ]
 
     THIRD_PARTY_APPS = [
+        "prune_media",
+        "isbn_field",
         "django_browser_reload",
         "django_watchfiles",
         "django_q",

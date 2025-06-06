@@ -12,3 +12,4 @@ class CatalogConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "play_different_games.catalog"
     verbose_name = "Catalog"
+    app_label = "catalog"

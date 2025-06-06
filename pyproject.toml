@@ -22,6 +22,7 @@ dependencies = [
     "Django>=5.2",
     "django-compressor>=4.5.1",
     "django-htmx>=1.23.0",
+    "django-isbn-field>=0.5.3",
     "django-prune-media>=0.1.5",
     "django-q2>=1.8.0",
     "django-redis>=5.4.0",

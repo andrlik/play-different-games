@@ -86,7 +86,7 @@ class UniqueSlugModel(models.Model):
             self.slug = self.generate_slug()
         super().save(*args, **kwargs)
 
-    def check_slug_configuration(self) -> None:
+    def check_slug_configuration(self) -> bool:
         """
         Does a sanity check to ensure the slug configuration and save operations.
         Raise `ImproperlyConfigured` if fails test.
@@ -95,6 +95,7 @@ class UniqueSlugModel(models.Model):
             if not hasattr(self, x):
                 msg = f"Cannot find field '{x}' in model to generate slug from."
                 raise ImproperlyConfigured(msg)
+        return True
 
     def generate_slug(self) -> str:
         """
