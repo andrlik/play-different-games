@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block extratitle %}{% blocktranslate with username=user.username %}{{ username }} Profile{% endblocktranslate %} - {% endblock %}
+
+{% block breadcrumbs %}
+  <li class="is-active"><a href="#" aria-current="page">{% translate "Profile" %}: {{ user.username }}</a></li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <h1 class="title">{% translate "User Profile" %}</h1>
+  <div class="content">
+    <dl class="metadata">
+      <dt>{% translate "Username" %}</dt>
+      <dd>{{ user.username }}</dd>
+      <dt>{% translate "Given Name" %}</dt>
+      <dd>{{ user.first_name }}</dd>
+      <dt>{% translate "Surname" %}</dt>
+      <dd>{{ user.last_name }}</dd>
+      <dt>{% translate "Email" %}</dt>
+      <dd>{{ user.email }}</dd>
+      <dt>{% translate "Timezone" %}</dt>
+      <dd>{{ user.profile.get_timezone_display }}</dd>
+    </dl>
+  </div>
+  <br />
+  <a href="{% url 'users:user-edit' username=user.username %}" class="button">{% translate "Edit" %}</a>
+  <a href="{% url 'password_change' %}" class="button">{% translate "Change password" %}</a>
+{% endblock content %}

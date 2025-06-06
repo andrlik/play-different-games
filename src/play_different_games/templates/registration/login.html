@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags i18n %}
+{% block extratitle %}{% translate "Log in" %} - {% endblock %}
+
+{% block content %}
+  <h1 class="title">{% translate "Log in" %}</h1>
+  <p>{% translate "Please log in to continue" %}</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <br />
+    <button type="submit" class="button is-primary">{% translate "Submit" %}</button>
+  </form>
+{% endblock content %}

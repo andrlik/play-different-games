@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+  <h1 class="title">{% translate "Welcome" %}</h1>
+  <p>{% blocktranslate %}This is Play Different Games, a discovery engine for TTRPGs! Not much to see here yet, but soon!{% endblocktranslate %}</p>
+  {% if not request.user.is_authenticated %}
+    <p>{% translate "You will need to login to continue." %}</p>
+  {% endif %}
+{% endblock content %}

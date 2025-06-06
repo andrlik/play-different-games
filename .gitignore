@@ -1,0 +1,8 @@
+.env
+.envrc
+.venv
+.tox
+site/*
+.coverage*
+staticfiles/*
+media/*

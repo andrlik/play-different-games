@@ -1,0 +1,16 @@
+/*
+ * app.css
+ *
+ * Copyright (c) 2025 Daniel Andrlik
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+.metadata dt {
+  font-weight: bold;
+}
+
+.table th {
+  text-wrap: nowrap;
+}

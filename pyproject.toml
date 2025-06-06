@@ -1,0 +1,286 @@
+[project]
+name = "play_different_games"
+version = "0.0.1"
+description = """A discovery engine for TTRPGs."""
+authors = [{ name = "Daniel Andrlik", email = "daniel@andrlik.org" }]
+license = "BSD-3-Clause"
+readme = "README.md"
+requires-python = ">=3.13"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Framework :: Django",
+    "Framework :: Django :: 5.2",
+
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3.13",
+
+]
+dependencies = [
+    "argon2-cffi>=25.1.0",
+    "crispy-bulma>=0.12.0",
+    "csscompressor>=0.9.5",
+    "Django>=5.2",
+    "django-compressor>=4.5.1",
+    "django-htmx>=1.23.0",
+    "django-prune-media>=0.1.5",
+    "django-q2>=1.8.0",
+    "django-redis>=5.4.0",
+    "django-storages[s3]>=1.14.6",
+    "django-template-partials>=24.4",
+    "environs[django]>=14.2.0",
+    "pillow>=11.2.1",
+    "psycopg[binary,pool]>=3.2.9",
+    "rules>=3.5",
+    "tzdata>=2025.2",
+    "uvicorn[standard]>=0.34.3",
+    "whitenoise>=6.9.0",
+]
+[project.urls]
+Repository = "https://github.com/andrlik/play-different-games"
+Homepage = "https://github.com/andrlik/play-different-games"
+Documentation = "https://andrlik.github.io/play-different-games/"
+
+
+[dependency-groups]
+dev = [
+    "pytest-cov",
+    "pytest-sugar",
+    "pytest-django",
+    "bandit[toml]",
+    "pyright",
+    "django-types",
+    "mkdocs-material",
+    "mkdocs-literate-nav",
+    "mkdocs-gen-files",
+    "markdown-extensions",
+    "mkdocs-include-markdown-plugin",
+    "mkdocstrings[python]",
+    "mike",
+    "bump-my-version",
+    "django-watchfiles",
+    "django-browser-reload",
+    "django-debug-toolbar",
+    "django-coverage-plugin",
+    "ruff>=0.11.13",
+    "honcho>=2.0.0",
+    "django-test-plus>=2.2.4",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/play_different_games"]
+
+[tool.hatch.build.targets.sdist]
+packages = ["src/play_different_games", "tests"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+pythonpath = [".", "src"]
+testpaths = ["tests", "src/play_different_games"]
+django_find_project = false
+norecursedirs = ["hooks", "*.egg", ".eggs", "dist", "build", "docs", ".tox", ".git", "__pycache__", ".venv"]
+doctest_optionflags = ["NUMBER", "NORMALIZE_WHITESPACE", "IGNORE_EXCEPTION_DETAIL"]
+
+addopts = [
+    "--strict-markers",
+      "--tb=short",
+      "--doctest-modules",
+      "--doctest-continue-on-failure",
+      "--cov=src/play_different_games",
+      "--cov-report=term-missing",
+      "--cov-branch",
+      "--ds=play_different_games.settings",
+      "--reuse-db",
+]
+
+[tool.coverage.run]
+source = ["src/play_different_games"]
+omit = ["*tests*", "*migrations*", "*staticfiles*", "src/play_different_games/templates/base.html"]
+parallel = true
+plugins = ["django_coverage_plugin"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "no cov",
+    "if __name__ == __main__:",
+    "if TYPE_CHECKING:",
+]
+
+[tool.check-wheel-contents]
+ignore = ["W004"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
+extend-exclude = ["migrations", ".tox"]
+
+[tool.ruff.lint]
+select = [
+  "A",
+  "ARG",
+  "B",
+  "C",
+  "DJ",
+  "DTZ",
+  "E",
+  "EM",
+  "F",
+  "FBT",
+  "I",
+  "ICN",
+  "ISC",
+  "N",
+  "PLC",
+  "PLE",
+  "PLR",
+  "PLW",
+  "Q",
+  "RUF",
+  "S",
+  "T",
+  "TID",
+  "UP",
+  "W",
+  "YTT",
+]
+ignore = [
+  # Allow non-abstract empty methods in abstract base classes
+  "B027",
+  # Allow boolean positional values in function calls, like `dict.get(... True)`
+  "FBT003",
+  # Ignore checks for possible passwords
+  "S105",
+  "S106",
+  "S107",
+  # Ignore complexity
+  "C901",
+  "PLR0911",
+  "PLR0912",
+  "PLR0913",
+  "PLR0915",
+  "DJ001",
+  "RUF012",
+  "ISC001",
+]
+unfixable = [
+  # Don't touch unused imports
+  "F401",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["S101", "FBT001", "ARG001", "ARG002", "E501", "PLR2004", "T201"]
+"conftest.py" = ["ARG001"]
+"src/play_different_games/urls.py" = ["RUF005"]
+"src/play_different_games/views.py" = ["A001"]
+"manage.py" = ["EM101"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["play_different_games"]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.black]
+target-version = ["py313"]
+line-length = 88
+color = true
+
+exclude = '''
+/(
+    \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | migrations
+    | buck-out
+    | build
+    | dist
+    | env
+    | venv
+)/
+'''
+
+[tool.django-stubs]
+django_settings_module = "play_different_games.settings"
+
+[tool.pyright]
+pythonVersion = "3.13"
+exclude = [
+    "**/__pycache__",
+    ".venv",
+    ".tox",
+    "tests",
+    "**/migrations/",
+    "conftest.py"
+]
+reportIncompatibleVariableOverride = false
+reportIncompatibleMethodOverride = false
+
+[tool.tox]
+env_list = ["3.13", "lint", "types"]
+
+[tool.tox.env_run_base]
+description = "Run tests under {base_python}"
+allowlist_externals = ["{change_dir}/.tox/{base_python}/bin/python"]
+runner = "uv-venv-lock-runner"
+with_dev = true
+commands = [["pytest"]]
+
+[tool.tox.env.lint]
+description = "Run linting via ruff"
+skip_install = true
+allowlist_externals = ["{change_dir}/.tox/{base_python}/bin/python", "ruff"]
+with_dev = true
+runner = "uv-venv-lock-runner"
+commands = [["ruff", "check"]]
+
+[tool.tox.env.types]
+description = "Run type checks via pyright"
+allowlist_externals = ["{change_dir}/.tox/{base_python}/bin/python"]
+runner = "uv-venv-lock-runner"
+with_dev = true
+commands = [["pyright"]]
+
+[tool.bandit]
+exclude_dirs = ["tests", "conftest.py"]
+
+[tool.bumpversion]
+current_version = "0.0.1"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{major}.{minor}.{patch}"]
+search = "{current_version}"
+replace = "{new_version}"
+regex = false
+ignore_missing_version = false
+tag = true
+sign_tags = false
+tag_name = "v{new_version}"
+tag_message = "Bump version: {current_version} → {new_version}"
+allow_dirty = false
+commit = true
+message = "Bump version: {current_version} → {new_version}"
+commit_args = "-n"
+pre_commit_hooks = ["uv sync", "git add uv.lock"]
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = "version = \"{current_version}\""
+replace = "version = \"{new_version}\""
+
+[[tool.bumpversion.files]]
+filename = "CHANGELOG.md"
+search = "## Unreleased"
+replace = "## {new_version}"
+
+[[tool.bumpversion.files]]
+filename = "CHANGELOG.md"
+search = "v{current_version}...HEAD"
+replace = "v{current_version}...v{new_version}"

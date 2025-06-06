@@ -1,0 +1,99 @@
+{% load compress django_htmx i18n static %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>{% block extratitle %}{% endblock %}{% translate "Play Different Games" %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A discovery engine for TTRPGs" />
+    <meta name="author" content="Daniel Andrlik"/>
+    <link rel="stylesheet" href="{% static "vendor/bulma/css/bulma.min.css" %}"  type="text/css"/>
+    {% compress css %}
+      <link rel="stylesheet" href="{% static "css/app.css" %}" type="text/css" />
+      {% block css %}
+      {% endblock css %}
+    {% endcompress %}
+    {% compress js %}
+      <script type="text/javascript" src="{% static 'vendor/htmx/htmx.min.js' %}" defer></script>
+      {% django_htmx_script %}
+      {% block javascript %}
+      {% endblock javascript %}
+    {% endcompress %}
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">{% translate "Play Different Games" %}</a>
+        <a class="navbar-burger" data-target="navMenu" role="button" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/">{% translate "Home" %}</a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">{% translate "Catalog" %}</a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="">{% translate "Games" %}</a>
+              <a class="navbar-item" href="">{% translate "Systems" %}</a>
+              <a class="navbar-item" href="">{% translate "Publishers" %}</a>
+              <a class="navbar-item" href="">{% translate "Authors" %}</a>
+
+            </div></div>
+        </div>
+        <div class="navbar-end">
+          {% if request.user.is_authenticated %}
+            {% if request.user.is_staff %}<a class="navbar-item" href="{% url 'admin:index' %}">{% translate "Admin" %}</a>{% endif %}
+            <a class="navbar-item" href="{% url 'users:user-detail' username=request.user.username %}">{% translate "Profile" %}</a>
+            <div class="navbar-item"><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" >{% translate "Log out" %}</button></form></div>
+          {% else %}
+            <a class="navbar-item" href="{% url 'login' %}">{% translate "Log in" %}</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+    <section class="section">
+      <div>
+        <section class="section">
+          <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+              {% block app_breadcrumb %}
+              {% endblock app_breadcrumb %}
+              {% block breadcrumbs %}
+              {% endblock breadcrumbs %}
+            </ul>
+          </nav>
+        </section>
+        {% if messages %}
+          <div>
+            <ul>
+              {% for message in messages %}
+                <li>
+                  <article class="message{% if message.tags %} is-{{ message.tags }}{% endif %}"><div class="message-body">{{ message }}</div></article>
+                </li>{% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        <section class="section is-three-fifths">
+          <div class="container">
+            {% block content %}{% endblock %}
+          </div>
+        </section>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p><strong>Play Different Games</strong> {% translate "by" %} <a href="https://www.andrlik.org" target="_blank">Daniel Andrlik</a>.</p>
+        <p><small>{% translate "Build" %}: {{ version }}</small></p>
+      </div>
+    </footer>
+    {% compress js %}
+      <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+      {% block extrajs %}{% endblock %}
+    {% endcompress %}
+  </body>
+</html>
