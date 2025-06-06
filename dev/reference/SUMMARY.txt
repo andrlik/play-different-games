@@ -1,0 +1,27 @@
+* play_different_games
+    * [admin](play_different_games/admin.md)
+    * [asgi](play_different_games/asgi.md)
+    * catalog
+        * [admin](play_different_games/catalog/admin.md)
+        * [apps](play_different_games/catalog/apps.md)
+        * [models](play_different_games/catalog/models.md)
+        * [views](play_different_games/catalog/views.md)
+    * [context_processors](play_different_games/context_processors.md)
+    * core
+        * [apps](play_different_games/core/apps.md)
+        * [models](play_different_games/core/models.md)
+        * [tasks](play_different_games/core/tasks.md)
+        * [utils](play_different_games/core/utils.md)
+    * [settings](play_different_games/settings.md)
+    * [urls](play_different_games/urls.md)
+    * users
+        * [admin](play_different_games/users/admin.md)
+        * [apps](play_different_games/users/apps.md)
+        * [forms](play_different_games/users/forms.md)
+        * [middleware](play_different_games/users/middleware.md)
+        * [models](play_different_games/users/models.md)
+        * [rules](play_different_games/users/rules.md)
+        * [urls](play_different_games/users/urls.md)
+        * [views](play_different_games/users/views.md)
+        * [zones](play_different_games/users/zones.md)
+    * [views](play_different_games/views.md)
