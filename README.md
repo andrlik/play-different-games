@@ -31,4 +31,4 @@ I mean it, don't use it until we do an official release.
 
 ## Contributing
 
-See our contributing guide.
+See our contributing guide in [our documentation](https://andrlik.github.io/play-different-games/latest/).
