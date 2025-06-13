@@ -49,7 +49,7 @@ with env.prefixed("DJANGO_"):
 
     DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-    DJANGO_APPS = [
+    INSTALLED_APPS = [
         "django.contrib.auth",
         "django.contrib.contenttypes",
         "django.contrib.sessions",
@@ -59,15 +59,11 @@ with env.prefixed("DJANGO_"):
         # "django.contrib.humanize", # Handy template tags
         "django.contrib.admin",
         "django.forms",
-    ]
-
-    FIRST_PARTY_APPS = [
+        # Our first party apps
         "play_different_games.core",
         "play_different_games.users",
         "play_different_games.catalog",
-    ]
-
-    THIRD_PARTY_APPS = [
+        # Third party apps
         "prune_media",
         "isbn_field",
         "django_browser_reload",
@@ -82,7 +78,7 @@ with env.prefixed("DJANGO_"):
     ]
 
     if env("AWS_ACCESS_KEY_ID", default=None):  # no cov
-        THIRD_PARTY_APPS += ["storages"]
+        INSTALLED_APPS += ["storages"]
 
     MIDDLEWARE = [
         "django.middleware.security.SecurityMiddleware",
@@ -101,10 +97,8 @@ with env.prefixed("DJANGO_"):
     ]
 
     if DEBUG and not TESTING:  # no cov
-        THIRD_PARTY_APPS += ["debug_toolbar"]
+        INSTALLED_APPS += ["debug_toolbar"]
         MIDDLEWARE.insert(1, "debug_toolbar.middleware.DebugToolbarMiddleware")
-
-    INSTALLED_APPS = DJANGO_APPS + FIRST_PARTY_APPS + THIRD_PARTY_APPS
 
     CACHES = {
         "default": env.dj_cache_url(
